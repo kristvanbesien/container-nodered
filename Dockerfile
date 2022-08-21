@@ -1,8 +1,9 @@
 ARG NODE_VERSION=16
 ARG OS=buster-slim
+ARG ARCH=arm64v8
 
 #### Stage BASE ########################################################################################################
-FROM node:${NODE_VERSION}-${OS} AS base
+FROM ${ARCH}/node:${NODE_VERSION}-${OS} AS base
 
 # Copy scripts
 
@@ -70,6 +71,7 @@ LABEL org.label-schema.build-date=${BUILD_DATE} \
     org.label-schema.vcs-ref=${BUILD_REF} \
     org.label-schema.vcs-type="Git" \
     org.label-schema.vcs-url="https://github.com/node-red/node-red-docker" \
+    org.label-schema.arch=${ARCH} \
     authors="Dave Conway-Jones, Nick O'Leary, James Thomas, Raymond Mouthaan"
 
 COPY --from=build /usr/src/node-red/prod_node_modules ./node_modules
