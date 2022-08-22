@@ -60,6 +60,7 @@ ARG BUILD_VERSION
 ARG BUILD_REF
 ARG NODE_RED_VERSION
 ARG TAG_SUFFIX=default
+ARG ARCH
 
 LABEL org.label-schema.build-date=${BUILD_DATE} \
     org.label-schema.docker.dockerfile=".docker/Dockerfile.debian" \
