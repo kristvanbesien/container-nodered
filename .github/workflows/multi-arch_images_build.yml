@@ -2,6 +2,7 @@ name: Multiarch build
 
 on:
   release: 
+    types: [published]
       
 env:
   IMAGE_NAME: nodered
