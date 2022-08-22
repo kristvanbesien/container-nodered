@@ -1,34 +1,46 @@
 name: Multiarch build
 
 on:
-  push:
+  release: 
       
 env:
   IMAGE_NAME: nodered
   IMAGE_TAG: latest
   IMAGE_REGISTRY: quay.io
   IMAGE_NAMESPACE: krist
-
+  NODE_VERSION: 16
+  
 jobs:
   build:
     name: Build and push multi-arch image
-    runs-on: ubuntu-20.04
+    runs-on: ubuntu-latest
     
     steps:
       - uses: actions/checkout@v2
         
       - name: Set up QEMU
         uses: docker/setup-qemu-action@v1
+      - name: Get Date
+        id: date
+        run: echo "::set-output name=date::$(date +'%Y-%m-%dT%H:%M:%SZ')"
+      - name: Get Node-RED Version
+        id: nrVersion
+        run: |
+          echo "::set-output name=version::$(grep -oE '\"node-red\": \"(\w*.\w*.\w*.\w*.\w*.)' package.json | cut -d\" -f4)"
         
       - name: Build image 
         id: build-image
         uses: redhat-actions/buildah-build@v2
         with:
           image: ${{ env.IMAGE_NAME }}
-          tags: ${{ env.IMAGE_TAG }}
+          tags: ${{ env.IMAGE_TAG }} ${{ env.GITHUB_REF }}
           archs: amd64, arm64
           build-args: |
-            
+            NODE_VERSION=${{ env.NODE_VERSION }}
+            BUILD_DATE=${{ steps.date.outputs.date }}
+            BUILD_VERSION=${{ env.GITHUB_REF }}
+            BUILD_REF=${{ env.GITHUB_SHA }}
+            NODE_RED_VERSION=${{ steps.nrVersion.outputs.version }}
           dockerfiles: |
             ./Dockerfile
             
