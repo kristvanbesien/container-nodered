@@ -29,7 +29,9 @@ RUN set -ex && \
     # chown -R node-red:node-red /usr/src/node-red
 
 # Install dependencies for nodes
-RUN apt-get install libavahi-compat-libdnssd-dev libudev-dev
+RUN apt-get install -y \
+    libavahi-compat-libdnssd-dev \
+    libudev-dev
 
 # Set work directory
 WORKDIR /usr/src/node-red
