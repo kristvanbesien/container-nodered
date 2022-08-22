@@ -30,7 +30,11 @@
     ],
     "dependencies": {
         "node-red": "3.0.2",
-        "node-red-node-discovery": ">=0.0.23"
+        "node-red-node-discovery": ">=0.0.23",
+        "node-red-contrib-dingz": ">=0.0.7",
+        "node-red-contrib-shelly-mqtt": ">=1.1.1",
+        "node-red-contrib-shelly": ">=9.4.0"
+
     },
     "engines": {
         "node": ">=12"
