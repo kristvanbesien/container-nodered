@@ -74,15 +74,6 @@ RUN chown -R node-red:root /usr/src/node-red
 
 RUN npm config set cache /data/.npm --global
 
-# Env variables
-ENV NODE_RED_VERSION=$NODE_RED_VERSION \
-    NODE_PATH=/usr/src/node-red/node_modules:/data/node_modules \
-    PATH=/usr/src/node-red/node_modules/.bin:${PATH} \
-    FLOWS=flows.json
-
-# ENV NODE_RED_ENABLE_SAFE_MODE=true    # Uncomment to enable safe start mode (flows not running)
-# ENV NODE_RED_ENABLE_PROJECTS=true     # Uncomment to enable projects option
-
 COPY scripts/nodered.service /etc/systemd/system
 RUN systemctl enable nodered
 

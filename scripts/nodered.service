@@ -4,10 +4,11 @@ After=syslog.target network.target
 Documentation=http://nodered.org/
 
 [Service]
-Environment="NODE_RED_OPTIONS=-v"
-Environment="NODE_RED_WORKDIR=/data"
-Environment="NODE_RED_SETTINGS=/config/settings.js"
-ExecStart=/usr/local/bin/node-red -u $NODE_RED_WORKDIR -s $NODE_RED_SETTINGS $NODE_RED_OPTIONS
+Environment="NODE_RED_VERSION=3.0.3"
+Environment="NODE_PATH=/usr/src/node-red/node_modules:/data/node_modules"
+Environment="PATH=/usr/src/node-red/node_modules/.bin:${PATH}"
+Environment="FLOWS=flows.json"
+ExecStart=/usr/bin/node node_modules/node-red/red.js --userDir /data $FLOWS 
 # User/Group that launches node-RED (it's advised to create a new user for Node-RED)
 # You can do : sudo useradd node-red
 # then change the User=root by User=node-red
